@@ -1,26 +1,36 @@
 package pl.migibud;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.SessionFactory;
-import pl.migibud.person.Person;
-import pl.migibud.person.PersonDao;
+import pl.migibud.genre.Genre;
+import pl.migibud.genre.GenreDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class App {
 
     public static void main(String[] args) {
         SessionFactory sessionFactory = DbConnection.getSessionFactory();
-        Dao<Person,Long> personDao = new PersonDao(sessionFactory.createEntityManager());
 
-        Person piotr = new Person("Piotr","Migaj");
-        Person anna = new Person("Anna","Migaj");
+        GenreDao genreDao = new GenreDao(sessionFactory.createEntityManager());
+        Genre genre1 = new Genre("ACTION");
+        Genre genre2 = new Genre("FANTASY");
+        Genre genre3 = new Genre("HORROR");
+        List<Genre> genres1 = new ArrayList<>();
+        genres1.add(genre1);
+        genres1.add(genre2);
+        genres1.add(genre3);
+        List<Genre> genres = genreDao.saveAll(List.of(genre1,genre2,genre3));
+        System.out.println(genres.size());
 
-        personDao.save(piotr);
-        personDao.save(anna);
+        Genre genre = genreDao.findByName("ACTION")
+                .orElseThrow(() -> new EntityNotFoundException("NO ENTITY WITH ACTION"));
 
-        List<Person> all = personDao.findAll();
+        System.out.println("Genre:" +genre);
 
-        all.forEach(System.out::println);
+        Genre genrexD = genreDao.findByName("DUPA")
+                .orElseThrow(() -> new EntityNotFoundException("NO ENTITY WITH DUPA"));
 
         DbConnection.close();
     }

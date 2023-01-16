@@ -6,7 +6,8 @@
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="pl.migibud.person.Person"/>
-<!--        <mapping class="pl.migibud.forecast.Forecast"/>-->
+        <mapping class="pl.migibud.genre.Genre"/>
+        <mapping class="pl.migibud.actor.Actor"/>
+        <mapping class="pl.migibud.movie.Movie"/>
     </session-factory>
 </hibernate-configuration>
