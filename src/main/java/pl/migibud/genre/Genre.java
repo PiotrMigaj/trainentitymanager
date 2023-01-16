@@ -1,6 +1,7 @@
 package pl.migibud.genre;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import pl.migibud.movie.Movie;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "genres")
+@Getter
 @NoArgsConstructor
 @ToString
 public class Genre {

@@ -68,7 +68,7 @@ public class GenreDao implements Dao<Genre,Long> {
             if (!transaction.isActive()){
                 transaction.begin();
             }
-            Optional<Genre> optionalGenre = entityManager.createQuery("SELECT g FROM Genre g WHERE g.name = :name", Genre.class)
+            Optional<Genre> optionalGenre = entityManager.createQuery("SELECT g FROM Genre g LEFT JOIN g.movies WHERE g.name = :name", Genre.class)
                     .setParameter("name", name)
                     .getResultStream()
                     .findFirst();
