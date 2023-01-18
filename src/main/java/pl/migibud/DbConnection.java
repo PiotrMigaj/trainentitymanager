@@ -12,7 +12,9 @@ public class DbConnection {
     }
 
     public static void close(){
-        InstanceHolder.sessionFactory.close();
+        if (InstanceHolder.sessionFactory!=null){
+            InstanceHolder.sessionFactory.close();
+        }
     }
 
     private static class InstanceHolder{

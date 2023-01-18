@@ -18,13 +18,21 @@ public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,unique = true)
-    private String name;
+    private Type type;
     @ToString.Exclude
     @OneToMany(mappedBy = "genre")
     private Set<Movie> movies;
 
-    public Genre(String name) {
-        this.name = name;
+    public Genre(Type type) {
+        this.type = type;
+    }
+
+    public enum Type{
+        HORROR,
+        FANTASY,
+        COMEDY,
+        ROMANCE;
     }
 }
