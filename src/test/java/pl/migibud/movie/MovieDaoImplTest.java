@@ -1,5 +1,6 @@
 package pl.migibud.movie;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.*;
 import pl.migibud.DbConnection;
@@ -8,6 +9,7 @@ import pl.migibud.genre.GenreDao;
 import pl.migibud.genre.GenreDaoImpl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,11 +50,12 @@ class MovieDaoImplTest {
         Movie movie = new Movie("Harry Potter", 2002);
         //when
         Movie savedMovie = movieDao.save(movie);
+        Optional<Movie> optionalMovie = movieDao.findById(savedMovie.getId());
         System.out.println(savedMovie);
         //then
         assertAll(
-                () -> assertThat(savedMovie.getId()).isNotNull(),
-                () -> assertThat(savedMovie.getId()).isEqualTo(1L)
+                ()->assertThat(savedMovie.getId()).isNotNull(),
+                ()->assertThat(optionalMovie).isNotEmpty()
         );
     }
 
