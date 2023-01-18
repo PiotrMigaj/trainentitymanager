@@ -199,5 +199,26 @@ public class MovieDaoImpl implements MovieDao {
         }
     }
 
-
+    @Override
+    public void deleteAll() {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            if (!transaction.isActive()){
+                transaction.begin();
+            }
+            entityManager.createNativeQuery("DELETE FROM movies").executeUpdate();
+            transaction.commit();
+        }catch (Exception e){
+            if (transaction!=null){
+                transaction.rollback();
+                e.printStackTrace();
+            }
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
 }

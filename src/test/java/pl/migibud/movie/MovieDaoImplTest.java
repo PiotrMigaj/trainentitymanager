@@ -1,10 +1,7 @@
 package pl.migibud.movie;
 
 import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import pl.migibud.DbConnection;
 import pl.migibud.genre.Genre;
 import pl.migibud.genre.GenreDao;
@@ -20,6 +17,7 @@ class MovieDaoImplTest {
 
     private static SessionFactory sessionFactory;
     private MovieDao movieDao;
+    private GenreDao genreDao;
 
 
     @BeforeAll
@@ -35,6 +33,13 @@ class MovieDaoImplTest {
     @BeforeEach
     void setUp() {
         movieDao = new MovieDaoImpl(sessionFactory);
+        genreDao = new GenreDaoImpl(sessionFactory);
+    }
+
+    @AfterEach
+    void tearDown(){
+        movieDao.deleteAll();
+        genreDao.deleteAll();
     }
 
     @Test
@@ -54,7 +59,6 @@ class MovieDaoImplTest {
     @Test
     void givenMoviesInTheDb_whenFindMoviesWithSpecifiedGenreType_thenShouldReturnListOfMoviesWithSpecifiedGenreType() {
         //given
-        GenreDao genreDao = new GenreDaoImpl(sessionFactory);
         Genre genreFantasy = new Genre(Genre.Type.FANTASY);
         Genre genreHorror = new Genre(Genre.Type.HORROR);
         genreDao.save(genreFantasy);

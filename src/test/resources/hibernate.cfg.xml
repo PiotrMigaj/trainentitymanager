@@ -7,7 +7,7 @@
         <property name="connection.url">jdbc:mysql://localhost:3306/hibernatefun_testdb?serverTimezone=UTC</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
-        <property name="hbm2ddl.auto">create-drop</property>
+        <property name="hbm2ddl.auto">update</property>
         <mapping class="pl.migibud.genre.Genre"/>
         <mapping class="pl.migibud.actor.Actor"/>
         <mapping class="pl.migibud.movie.Movie"/>
