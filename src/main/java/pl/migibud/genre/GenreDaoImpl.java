@@ -196,4 +196,9 @@ public class GenreDaoImpl implements GenreDao {
             }
         }
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        throw new UnsupportedOperationException();
+    }
 }

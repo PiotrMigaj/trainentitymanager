@@ -10,4 +10,5 @@ public interface Dao<T,ID> {
     List<T> findAll();
     void delete(T entity);
     void deleteAll();
+    boolean existsById(Long id);
 }

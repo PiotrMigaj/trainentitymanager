@@ -88,4 +88,16 @@ class MovieDaoImplTest {
         );
     }
 
+    @Test
+    void givenMoviesInTheDb_whenCheckIfMovieExistsById_thenShouldReturnTrue() {
+        //given
+        Movie movie1 = new Movie("Harry Potter", 2002);
+        movieDao.save(movie1);
+
+        //when
+        boolean result = movieDao.existsById(movie1.getId());
+        //then
+        assertThat(result).isTrue();
+    }
+
 }

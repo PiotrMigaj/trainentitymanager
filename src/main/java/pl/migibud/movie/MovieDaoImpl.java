@@ -221,4 +221,31 @@ public class MovieDaoImpl implements MovieDao {
             }
         }
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            if (!transaction.isActive()){
+                transaction.begin();
+            }
+            boolean result = entityManager.createQuery("SELECT CASE WHEN COUNT(m)=1 THEN TRUE ELSE FALSE END FROM Movie m WHERE m.id=:id", Boolean.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            transaction.commit();
+            return result;
+        }catch (Exception e){
+            if (transaction!=null){
+                transaction.rollback();
+                e.printStackTrace();
+            }
+            return false;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
 }
